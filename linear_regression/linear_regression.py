@@ -9,13 +9,28 @@ class LinearRegression:
 
     # for training (on dataset X with corresponding truth values y)
     def fit(self, X, y):
-        pass
-        for i in range(X):
-            # get the prediction
-            y_hat = np.dot(np.transpose(self.weights), self.X[0])
-            # compare the prediction to the actutal value
-            loss = 0.5*(y_hat - y[i])**2
+        # X dimension n_samples (rows), n_features (columns - coordinates for example)
+        n_samples, n_features = X.shape
+
+        # initialize weights and bias to be zero
+        self.weights = np.zeros(n_features)
+        self.bias = 0
+
+        # loss = y_hat - y 
+        # MSE = 1/n ∑ (y_hat - y)^2 = 1/n ∑ ((wx+b) - y)^2
+        # derivatives: dMSE/dw = 2/n ∑ x((wx+b)-y)  dMSE/db = 2/n ∑ ((wx+b)-y)
+
+        # apply gradient descent
+        for _ in range(self.n_iter):
+            y_hat = np.dot(X, self.weights) + self.bias # prediction
+
+            dw = (2/n_samples) * np.dot(X.T, (y_hat - y))
+            db = (2/n_samples) * np.sum((y_hat - y))
+
+            self.weights -= self.lr * dw
+            self.bias -= self.lr * db
 
     # predict values for new dataset X using our fitted model
     def predict(self, X):
-        pass
+        y_pred = np.dot(X, self.weights) + self.bias
+        return y_pred
