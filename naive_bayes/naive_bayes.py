@@ -20,7 +20,7 @@ class NaiveBayes:
     
     def predict(self, X):
         y_hat = [self._predict(sample) for sample in X]
-        return y_har
+        return y_hat
 
 
     def _predict(self, X):
@@ -43,3 +43,4 @@ class NaiveBayes:
         denom = np.sqrt(2* np.pi * var)
         
         return numer/denom
+
